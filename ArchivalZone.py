@@ -2,16 +2,22 @@ import dropbox
 import pandas as pd
 import fnmatch
 import yaml
-import os
+import os, sys
 import io
+
+
 
 dropbox_config = 'auth.yaml'
 
-#os.chdir('/Users/dillon/python_projects/ipynb/lib')
+#os.chdir('C:\\Users\\CZO_User\\Documents\\GitHub\\ArchivalZone')
 #test
 
-with open(dropbox_config, 'r') as config_file:
-    config = yaml.safe_load(config_file)
+with open(dropbox_config, 'r') as stream:
+    try:
+        config =(yaml.safe_load(stream))
+    except yaml.YAMLError as exc:
+        print(exc)
+    
 
 dbx = dropbox.Dropbox(config['dropbox']['dropbox_sdk'])
 dbx.users_get_current_account()
